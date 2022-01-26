@@ -58,4 +58,28 @@ class PostServiceTest {
         // then
         assertThat(post.getTitle()).isEqualTo(postService.findById(savedId).getTitle());
     }
+
+    @Test
+    public void deleteTest() throws Exception {
+        // given
+        Post post = new Post();
+        post.setTitle("test");
+        post.setContent("test");
+        post.setBoardType(BoardType.notice);
+        LocalDateTime now = LocalDateTime.now();
+        post.setRegDate(now);
+        post.setEditDate(now);
+        Long savedPost = postService.savePost(post);
+
+        Post test = new Post();
+        test.setTitle("deleteTest");
+        postService.savePost(test);
+
+        // when
+        postService.deletePost(savedPost);
+
+        // then
+        assertThat(postService.findAll().size()).isEqualTo(1);
+        assertThat(postService.findById(savedPost)).isNull();
+    }
 }

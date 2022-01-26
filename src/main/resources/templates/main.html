@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+        <h1>Boong Board</h1>
+        <p>SpringBoot 와 JPA 를 사용하여 홈페이지를 구상합니다. Thymeleaf 와 BootStrap 으로 페이지를 꾸미고 있으며 추후 기능을 많이 만들려고 합니다</p>
+        <p><a class="btn btn-primary btn-lg" href="/posts" role="button">게시판으로</a></p>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+</div>
+</body>
+</html>
