@@ -7,12 +7,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         format-sql: true
 
 logging:
   level:
-    org.hibernate.SQL: info
+    org.hibernate.SQL: debug
     org.hibernate.type: trace
