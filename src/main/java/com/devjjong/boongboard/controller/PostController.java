@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
@@ -33,12 +30,7 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public String postInfo(@PathVariable Long postId, Model model) {
-        Post post = postService.findById(postId);
-        PostForm form = new PostForm();
-        form.setTitle(post.getTitle());
-        form.setContent(post.getContent());
-        form.setRegDate(post.getRegDate());
-        form.setEditDate(post.getEditDate());
+        PostForm form = getPostForm(postId);
 
         model.addAttribute("postForm", form);
         return "posts/post";
@@ -47,14 +39,14 @@ public class PostController {
     @GetMapping("/post")
     public String createForm(Model model) {
         model.addAttribute("postForm", new PostForm());
-        return "posts/postForm";
+        return "posts/createPostForm";
     }
 
     @PostMapping("/post")
     public String createPost(@Valid PostForm form, BindingResult result, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            return "posts/postForm";
+            return "posts/createPostForm";
         }
 
         Post post = new Post();
@@ -69,8 +61,44 @@ public class PostController {
 
         redirectAttributes.addAttribute("savedId", savedId);
 
-        return "redirect:/{savedId}";
+        return "redirect:/posts/{savedId}";
     }
+
+    @GetMapping("/{postId}/edit")
+    public String editForm(@PathVariable Long postId, Model model) {
+        PostForm postForm = getPostForm(postId);
+
+        model.addAttribute("postForm", postForm);
+        return "posts/updatePostForm";
+    }
+
+    @PostMapping("/{postId}/edit")
+    public String editPost(@PathVariable Long postId, @Valid PostForm form, BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/posts/{postId}/edit";
+        }
+        postService.updatePost(postId, form);
+        return "redirect:/posts/{postId}";
+    }
+
+    private PostForm getPostForm(Long postId) {
+        Post post = postService.findById(postId);
+        PostForm form = new PostForm();
+        form.setId(postId);
+        form.setTitle(post.getTitle());
+        form.setContent(post.getContent());
+        form.setRegDate(post.getRegDate());
+        form.setEditDate(post.getEditDate());
+        return form;
+    }
+
+    // 추후에 DELETE Mapping 으로 변경
+    @PostMapping("/{postId}/delete")
+    public String deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+        return "redirect:/posts";
+    }
+
 
     /** 테스트용 데이터 추가 */
     @PostConstruct

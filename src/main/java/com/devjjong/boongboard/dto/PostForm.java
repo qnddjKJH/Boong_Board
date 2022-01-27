@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 @Data
 public class PostForm {
 
+    private Long id;
+
     @NotEmpty(message = "제목은 필수 입니다.")
     private String title;
 

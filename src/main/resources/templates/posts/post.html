@@ -4,10 +4,31 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-
-
+    <div class="container">
+        <div class="page-header">
+            <h1 th:text="${postForm.title}"></h1>
+        </div>
+        <div class="jumbotron">
+            <p th:text="${postForm.content}"></p>
+        </div>
+        <a th:href="@{|/posts/${postForm.id}/edit|}" class="btn btn-primary pull-right me-1">수정</a>
+        <a href="#" th:href="'javascript:deletePost('+${postForm.id}+')'"
+           onclick="if(!confirm('정말로 삭제하시겠습니까?')) { return false; }"
+           class="btn btn-danger pull-right">삭제</a>
+        <a href="/posts" class="btn btn-default pull-right col-mr-1">목록으로</a>
+    </div>
 
     <div th:replace="fragments/footer :: footer" />
 </div>
 </body>
+<script>
+    function deletePost(id) {
+        const form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/posts/" + id + "/delete");
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
 </html>
