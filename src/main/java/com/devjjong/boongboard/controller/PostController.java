@@ -1,26 +1,35 @@
 package com.devjjong.boongboard.controller;
 
+import com.devjjong.boongboard.domain.Board;
 import com.devjjong.boongboard.domain.BoardType;
 import com.devjjong.boongboard.domain.Post;
 import com.devjjong.boongboard.dto.PostForm;
+import com.devjjong.boongboard.service.BoardService;
 import com.devjjong.boongboard.service.PostService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 
+@Slf4j
 @Controller
 @RequestMapping("/posts")
 @RequiredArgsConstructor
 public class PostController {
 
+    private final BoardService boardService;
     private final PostService postService;
+
 
     @GetMapping
     public String home(Model model) {
@@ -39,15 +48,18 @@ public class PostController {
     @GetMapping("/post")
     public String createForm(Model model) {
         model.addAttribute("postForm", new PostForm());
+        model.addAttribute("boards", boardService.findAll());
         return "posts/createPostForm";
     }
 
     @PostMapping("/post")
     public String createPost(@Valid PostForm form, BindingResult result, RedirectAttributes redirectAttributes) {
-
+        log.info("formData={}", form.getBoardType());
         if (result.hasErrors()) {
             return "posts/createPostForm";
         }
+
+        Board board = boardService.findOne(form.getBoardType());
 
         Post post = new Post();
         post.setTitle(form.getTitle());
@@ -55,7 +67,7 @@ public class PostController {
         LocalDateTime now = LocalDateTime.now();
         post.setRegDate(now);
         post.setEditDate(now);
-        post.setBoardType(BoardType.free);
+        post.setBoard(board);
 
         Long savedId = postService.savePost(post);
 
@@ -103,6 +115,15 @@ public class PostController {
     /** 테스트용 데이터 추가 */
     @PostConstruct
     public void init() {
+        Board board1 = new Board();
+        board1.setBoardType(BoardType.free);
+
+        Board board2 = new Board();
+        board2.setBoardType(BoardType.notice);
+
+        boardService.save(board1);
+        boardService.save(board2);
+
         String textForTest = "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.";
         LocalDateTime now = LocalDateTime.now();
 
@@ -112,10 +133,13 @@ public class PostController {
             post.setContent(textForTest);
             post.setRegDate(now);
             post.setEditDate(now);
-            post.setBoardType(BoardType.free);
+            if (i % 2 == 0) {
+                post.setBoard(board1);
+            } else {
+                post.setBoard(board2);
+            }
             postService.savePost(post);
         }
-
     }
 
 }

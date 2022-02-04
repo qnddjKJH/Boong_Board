@@ -23,6 +23,7 @@ public class Post {
 
     private LocalDateTime editDate;
 
-    @Enumerated(EnumType.STRING)
-    private BoardType boardType;
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private Board board;
 }

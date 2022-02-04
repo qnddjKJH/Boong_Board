@@ -26,7 +26,7 @@ class PostServiceTest {
         Post post = new Post();
         post.setTitle("test");
         post.setContent("test");
-        post.setBoardType(BoardType.notice);
+//        post.setBoardType(BoardType.notice);
         LocalDateTime now = LocalDateTime.now();
         post.setRegDate(now);
         post.setEditDate(now);
@@ -44,7 +44,7 @@ class PostServiceTest {
         Post post = new Post();
         post.setTitle("test");
         post.setContent("test");
-        post.setBoardType(BoardType.notice);
+//        post.setBoardType(BoardType.notice);
         LocalDateTime now = LocalDateTime.now();
         post.setRegDate(now);
         post.setEditDate(now);
@@ -65,7 +65,7 @@ class PostServiceTest {
         Post post = new Post();
         post.setTitle("test");
         post.setContent("test");
-        post.setBoardType(BoardType.notice);
+//        post.setBoardType(BoardType.notice);
         LocalDateTime now = LocalDateTime.now();
         post.setRegDate(now);
         post.setEditDate(now);

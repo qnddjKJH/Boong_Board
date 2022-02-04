@@ -6,7 +6,7 @@ public enum BoardType {
 
     private String value;
     
-    BoardType(String value) {
+    private BoardType(String value) {
         this.value = value;
     }
 

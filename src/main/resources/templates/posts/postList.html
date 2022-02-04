@@ -21,7 +21,7 @@
                     <a th:text="${post.title}" th:href="@{|/posts/${post.id}|}"></a>
                 </td>
                 <td th:text="${post.regDate}"></td>
-                <td th:text="${post.boardType}"></td>
+                <td th:text="${post.board.boardType.value}"></td>
             </tr>
             </tbody>
         </table>
