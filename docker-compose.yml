@@ -1,3 +1,4 @@
+version: "3"
 services:
   db:
     container_name: h2-db
@@ -8,7 +9,7 @@ services:
     volumes:
       - /Users/kjh/docker/h2_docker/test:/opt/h2-data
     environment:
-      H2_OPTIONS=-ifNotExists
+      - H2_OPTIONS=-ifNotExists
     restart: always
   web:
     container_name: spring-board
@@ -18,8 +19,7 @@ services:
     volumes:
       - /Users/kjh/docker/app:/app
     working_dir: /app
-    command:
-      - ["./gradlew", "bootJar"]
+    command: ["./gradlew", "bootJar"]
     depends_on:
       - db
     restart: always
