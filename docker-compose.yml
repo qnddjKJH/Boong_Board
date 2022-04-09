@@ -2,7 +2,7 @@ version: "3"
 services:
   db:
     container_name: h2-db
-    image: oscarfonts/h2
+    image: oscarfonts/h2:1.4.199
     ports:
       - "1521:1521"
       - "8081:81"
