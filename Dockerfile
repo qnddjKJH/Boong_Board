@@ -1,3 +1,4 @@
 FROM openjdk:11
-VOLUME ./:/app
-ENTRYPOINT ["./gradlew", "bootJar"]
+CMD ["./gradlew", "build"]
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
