@@ -17,7 +17,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - /Users/kjh/docker/app:/app
+      - /app
     working_dir: /app
     command: ["./gradlew", "bootJar"]
     depends_on:
