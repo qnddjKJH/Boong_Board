@@ -1,0 +1,26 @@
+services:
+  db:
+    container_name: h2-db
+    image: oscarfonts/h2
+    ports:
+      - "1521:1521"
+      - "8081:81"
+    volumes:
+      - /Users/kjh/docker/h2_docker/test:/opt/h2-data
+    environment:
+      H2_OPTIONS=-ifNotExists
+    restart: always
+  web:
+    container_name: spring-board
+    image: openjdk:11
+    ports:
+      - "8080:8080"
+    volumes:
+      - /Users/kjh/docker/app:/app
+    working_dir: /app
+    command:
+      - ["./gradlew", "bootJar"]
+    depends_on:
+      - db
+    restart: always
+

@@ -1,13 +1,13 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/boongboard
+    url: jdbc:h2:tcp://localhost:1521/test
     username: sa
     password:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         format-sql: true
@@ -20,7 +20,6 @@ spring:
 
   thymeleaf:
     cache: false
-
 
 logging:
   level:
