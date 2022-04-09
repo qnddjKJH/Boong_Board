@@ -1,3 +1,3 @@
 FROM openjdk:11
-VOLUME /app
+VOLUME ./:/app
 ENTRYPOINT ["./gradlew", "bootJar"]
