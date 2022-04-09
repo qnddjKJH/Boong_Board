@@ -20,7 +20,7 @@ services:
       - "8080:8080"
     volumes:
       - /Users/kjh/docker/app:/app
-    working_dir: /app
+    working_dir: /app/build/libs
     command: ["java", "-jar", "app.jar"]
     depends_on:
       - db
