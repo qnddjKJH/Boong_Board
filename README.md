@@ -1,6 +1,9 @@
 # Spring Boot & JPA 게시판
 Spring boot 와 JPA 공부했던 내용 종합적으로 간단하게 게시판 만들기
 
+## Docker
+Docker 를 기본 공부를 다시 하고 Docker 적용할 예정 지금은 실패..ㅠ
+
 ## stack
 * jdk11
 * spring
